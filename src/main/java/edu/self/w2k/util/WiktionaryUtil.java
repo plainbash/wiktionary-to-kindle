@@ -57,6 +57,7 @@ public final class WiktionaryUtil {
                 for (IWiktionarySense sense : entry.getSenses()) {
 
                     lexicon.write("<li><span>");
+//                    lexicon.write(StringEscapeUtils.escapeXml10(sense.getGloss().toString().replaceAll("[\n\r]", "; ")));
                     lexicon.write(wordFormParser.format(StringEscapeUtils.escapeXml10(sense.getGloss().toString().replaceAll("[\n\r]", "; "))));
                     lexicon.write("</span>");
 

@@ -13,11 +13,11 @@ public class WordForm {
         valid = terms.length >= 2;
         if (valid) {
             for (String term : terms) {
-                if (!term.contains("=") && !term.contains("-form of")) {
+                if (!term.contains("=") && !term.contains(" of") && !term.isEmpty()) {
                     infinitiveForm = term;
                 }
             }
-            description = Arrays.stream(terms).filter(s -> !s.contains("-form of") && !s.equalsIgnoreCase(infinitiveForm)).collect(Collectors.joining("|"));
+            description = Arrays.stream(terms).filter(s -> !s.equalsIgnoreCase(infinitiveForm) && !s.isEmpty()).collect(Collectors.joining("|"));
         }
     }
 

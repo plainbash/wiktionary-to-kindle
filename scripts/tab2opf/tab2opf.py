@@ -102,13 +102,15 @@ def readkey(r, defs):
         replace('"', "'"). \
         replace('<', '\\<'). \
         replace('>', '\\>'). \
-        lower().strip()
+        strip()
+        # lower().strip()
 
     nkey = nkey. \
         replace('"', "'"). \
         replace('<', '\\<'). \
         replace('>', '\\>'). \
-        lower().strip()
+        strip()
+        # lower().strip()
 
     if key == '':
         raise Exception("Missing key {}".format(term))
@@ -222,17 +224,50 @@ def writekey(to, key, defn):
 # 10,000 keys written to each file (why?? I dunno)
 #
 # Returns the number of files.
+# def writekeys(defns):
+#     keyit = iter(sorted(defns))
+#     for j in count():
+#         keys = list(islice(keyit, 10000))
+#         if len(keys) == 0:
+#             break
+#         else:
+#             with writekeyfile(j) as to:
+#                 for key in keys:
+#                     writekey(to, key, defns[key])
+#     return j
+
 def writekeys(defns):
-    keyit = iter(sorted(defns))
-    for j in count():
-        keys = list(islice(keyit, 10000))
-        if len(keys) == 0:
-            break
-        else:
-            with writekeyfile(j) as to:
-                for key in keys:
-                    writekey(to, key, defns[key])
-    return j
+    keys = sorted(defns)
+    if len(keys) == 0:
+        return 0
+
+    groupedKeys = dict()
+
+    currentPrefix = ""
+    fileSuffixes = set()
+    for key in keys:
+        currentPrefix = createPrefix(key)
+        fileSuffixes.add(currentPrefix)
+
+        if not currentPrefix in groupedKeys:
+            groupedKeys[currentPrefix] = []
+              
+        groupedKeys[currentPrefix].append(key)
+
+    # Inefficient write
+    for prefix in groupedKeys:
+        with writekeyfile(prefix) as to:
+            if len(groupedKeys[prefix]) > 10000:
+                print("Group: {} has more than {} keys".format(prefix, len(groupedKeys[prefix])))
+            for word in groupedKeys[prefix]:
+                writekey(to, word, defns[word])
+    return sorted(fileSuffixes)
+
+def createPrefix(key):
+    if len(key) >= 2:
+         return str(ord(key[0:1])) + "-" + str(ord(key[1:2]))
+
+    return str(ord(key[0:1])) + "-"
 
 
 # After writing keys, the opf that references all the key files
@@ -273,7 +308,7 @@ def openopf():
 # Write the opf that describes all the key files
 def writeopf(ndicts, name):
     with openopf() as to:
-        for i in range(ndicts):
+        for i in ndicts:
             to.write("""
     <item id="dictionary{ndict}" href="dictionary-{src}-{trg}-{ndict}.html" media-type="application/xhtml+xml"/>""".format(ndict=i, src=SRC_LANG, trg=TRG_LANG))
 
@@ -281,7 +316,7 @@ def writeopf(ndicts, name):
 </manifest>
 
 <spine>""")
-        for i in range(ndicts):
+        for i in ndicts:
             to.write("""
     <itemref idref="dictionary{ndict}"/>""".format(ndict=i))
 
