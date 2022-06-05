@@ -52,7 +52,7 @@ public final class WiktionaryUtil {
                     LOG.info(count + " entries.");
                 }
 
-                lexicon.write(String.format("<a id=\"%s\">%s</a>", entry.getWord(), entry.getWord()));
+                lexicon.write(entry.getWord());
                 lexicon.write("\t<ol>");
                 for (IWiktionarySense sense : entry.getSenses()) {
 
