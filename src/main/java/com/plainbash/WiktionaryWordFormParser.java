@@ -14,8 +14,8 @@ public class WiktionaryWordFormParser {
                 if (wordForm.isValid()) {
                     return String.format("<i>%s form of <a href=\"dictionary-fi-en-%s-%s.html#%s\">%s</a></i>",
                             wordForm.getDescription(),
-                            (int)wordForm.getInfinitiveForm().charAt(0),
-                            wordForm.getInfinitiveForm().length()>= 2 ? (int)wordForm.getInfinitiveForm().charAt(1) : "",
+                            leadingNumber((int)wordForm.getInfinitiveForm().charAt(0)),
+                            wordForm.getInfinitiveForm().length()>= 2 ? leadingNumber((int)wordForm.getInfinitiveForm().charAt(1)) : "",
                             wordForm.getInfinitiveForm(),
                             wordForm.getInfinitiveForm());
                 }
@@ -26,5 +26,10 @@ public class WiktionaryWordFormParser {
         }
 
         return entry;
+    }
+
+    private String leadingNumber(int i) {
+        String s = Integer.toString(i);
+        return ("000" + s).substring(s.length());
     }
 }

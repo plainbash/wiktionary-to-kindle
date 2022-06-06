@@ -15,8 +15,8 @@ public class WiktionaryWordFormParserTest {
 
         WiktionaryWordFormParser parser = new WiktionaryWordFormParser();
 
-        Assert.assertEquals("Invalid string", "<i>fi-form of|case=adessive|pr=third-person|pl=singular|mood=indicative|tense=present|suffix=-pas form of <a href=\"dictionary-fi-en-115-97.html#saada\">saada</a></i>", parser.format(shortDescription));
-        Assert.assertEquals("Invalid string", "<i>fi-form of|pr=second-person|pl=singular|mood=imperative|tense=present connegative|suffix=-pas form of <a href=\"dictionary-fi-en-115-97.html#saada\">saada</a></i>", parser.format(longDescription));
+        Assert.assertEquals("Invalid string", "<i>fi-form of|case=adessive|pr=third-person|pl=singular|mood=indicative|tense=present|suffix=-pas form of <a href=\"dictionary-fi-en-115-097.html#saada\">saada</a></i>", parser.format(shortDescription));
+        Assert.assertEquals("Invalid string", "<i>fi-form of|pr=second-person|pl=singular|mood=imperative|tense=present connegative|suffix=-pas form of <a href=\"dictionary-fi-en-115-097.html#saada\">saada</a></i>", parser.format(longDescription));
 //        Assert.assertEquals("Invalid string", "<i>pr=second-person|pl=singular|mood=imperative|tense=present connegative|suffix=-pas form of <a href=\"dictionary-fi-en-115-97.html#saada\">saada</a></i>", parser.format(inflectionForm));
 //        Assert.assertEquals("Invalid string", "<i>pr=second-person|pl=singular|mood=imperative|tense=present connegative|suffix=-pas form of <a href=\"dictionary-fi-en-115-97.html#saada\">saada</a></i>", parser.format(infinitiveForm));
 //        Assert.assertEquals("Invalid string", "<i>pr=second-person|pl=singular|mood=imperative|tense=present connegative|suffix=-pas form of <a href=\"dictionary-fi-en-115-97.html#saada\">saada</a></i>", parser.format(verbForm));
@@ -38,7 +38,7 @@ public class WiktionaryWordFormParserTest {
 
         WiktionaryWordFormParser parser = new WiktionaryWordFormParser();
 
-        Assert.assertEquals("Invalid string", "<i>fi-form of|case=translative|pl=plural form of <a href=\"dictionary-fi-en-97-115.html#asia\">asia</a></i>", parser.format(description));
+        Assert.assertEquals("Invalid string", "<i>fi-form of|case=translative|pl=plural form of <a href=\"dictionary-fi-en-097-115.html#asia\">asia</a></i>", parser.format(description));
     }
 
     @Test

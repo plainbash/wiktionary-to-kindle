@@ -265,9 +265,9 @@ def writekeys(defns):
 
 def createPrefix(key):
     if len(key) >= 2:
-         return str(ord(key[0:1])) + "-" + str(ord(key[1:2]))
+         return str(format(ord(key[0:1]), '03')) + "-" + str(format(ord(key[1:2]), '03'))
 
-    return str(ord(key[0:1])) + "-"
+    return str(format(ord(key[0:1]), '03')) + "-"
 
 
 # After writing keys, the opf that references all the key files
