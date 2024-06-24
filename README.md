@@ -27,14 +27,7 @@ Converts a set of Wiktionary entries into a MOBI dictionary usable by a Kindle.
 
 ## How to generate your own dictionary
 
-### 1. Clone the repository & the `tab2opf` submodule
-
-```sh
-git clone https://github.com/nyg/wiktionary-to-kindle.git
-git submodule update --init --recursive
-```
-
-### 2. Build the project
+### 1. Build the project
 
 [Apache Maven](https://maven.apache.org) is required.
 
@@ -42,7 +35,7 @@ git submodule update --init --recursive
 mvn package
 ```
 
-### 3. Download the Wiktionary dump
+### 2. Download the Wiktionary dump
 
 Download the latest English Wiktionary dump. In the following command, the `en` and `latest` arguments are the defaults so they are not needed. Note that the specified language should be parsable by JWKTL (currently it only supports `en`, `de`, `ru`). To specify another date use the `YYYYMMDD` format. The dump downloaded is `pages-articles.xml.bz2`.
 
@@ -50,7 +43,7 @@ Download the latest English Wiktionary dump. In the following command, the `en` 
 java -jar target/wiktionary-to-kindle-1.0.0.jar download en latest
 ```
 
-### 4. Parse the dump
+### 3. Parse the dump
 
 The dump must now be parsed using the following command (as mentioned above, `en` and `latest` are not needed).
 
@@ -58,7 +51,7 @@ The dump must now be parsed using the following command (as mentioned above, `en
 java -jar target/wiktionary-to-kindle-1.0.0.jar parse en latest
 ```
 
-### 5. Generate the dictionary file
+### 4. Generate the dictionary file
 
 Time has now come to generate the dictionary text file. As said before, the default language is `en` but here it is possible to select only the entries of a particular language. For example, if we want only the Greek entries (`el`) of the English Wiktionary, the following command is to be used:
 
@@ -66,7 +59,7 @@ Time has now come to generate the dictionary text file. As said before, the defa
 java -jar target/wiktionary-to-kindle-1.0.0.jar generate el
 ```
 
-### 6. Generate an OPF file from the dictionary file
+### 5. Generate an OPF file from the dictionary file
 
 The dictionary file has been generated in `dictionaries/lexicon.txt`. To convert it into an OPF file, execute the commands below. Python 3 is required. The `-s` and `-t` options are the source and target languages respectively.
 
@@ -75,8 +68,8 @@ cd dictionaries
 python ../scripts/tab2opf/tab2opf.py -s el -t en -o "Greek–English Dictionary" lexicon.txt
 ```
 
-### 7. Convert the OPF into a MOBI eBook
-
+### 6. Convert the OPF into a MOBI eBook
+#### Using kindlegen (obsolete)
 Convert the OPF file into a MOBI eBook using KindleGen.
 
 ```sh
@@ -89,6 +82,12 @@ Convert the OPF file into a MOBI eBook using KindleGen.
 # Windows
 ..\scriptgs\kindlegen_windows\kindlegen.exe dictionary-el-en.opf
 ```
+
+#### Using Kindle Previewer
+1. Download [Kindle Previewer](https://kdp.amazon.com/en_US/help/topic/G202131170). 
+2. Open the OPF file, e.g. dictionary-el-en.opf, using the software .
+3. Wait until the loading finishes.
+4. Choose File --> Export.
 
 ### 8. Upload the file to your Kindle
 

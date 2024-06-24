@@ -133,7 +133,7 @@ public class WiktionaryArticleParser extends WiktionaryPageParser<WiktionaryPage
 				entryParser.parse(page, text);
 			}
 			catch (StringIndexOutOfBoundsException e) {
-				logger.warning("Exception caught while processing page: " + page + " Skip.");
+				logger.warning(String.format("Exception caught while processing page: %s + with text: %s. Skip|%s", page, text, e));
 			}
 		}
 

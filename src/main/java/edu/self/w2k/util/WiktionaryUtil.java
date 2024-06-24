@@ -1,5 +1,6 @@
 package edu.self.w2k.util;
 
+import com.plainbash.WiktionaryWordFormParser;
 import de.tudarmstadt.ukp.jwktl.JWKTL;
 import de.tudarmstadt.ukp.jwktl.api.IWiktionaryEdition;
 import de.tudarmstadt.ukp.jwktl.api.IWiktionaryEntry;
@@ -19,7 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class WiktionaryUtil {
-
     private final static Logger LOG = Logger.getLogger(WiktionaryUtil.class.getName());
 
     public static void generateDictionary(String lang) {
@@ -38,6 +38,8 @@ public final class WiktionaryUtil {
         WiktionaryEntryFilter entryFilter = new WiktionaryEntryFilter();
         entryFilter.setAllowedWordLanguages(languageCode);
 
+        WiktionaryWordFormParser wordFormParser = new WiktionaryWordFormParser();
+
         int count = 0;
         File file = new File("dictionaries/lexicon.txt");
         try (BufferedWriter lexicon = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8))) {
@@ -55,7 +57,8 @@ public final class WiktionaryUtil {
                 for (IWiktionarySense sense : entry.getSenses()) {
 
                     lexicon.write("<li><span>");
-                    lexicon.write(StringEscapeUtils.escapeXml10(sense.getGloss().toString().replaceAll("[\n\r]", "; ")));
+//                    lexicon.write(StringEscapeUtils.escapeXml10(sense.getGloss().toString().replaceAll("[\n\r]", "; ")));
+                    lexicon.write(wordFormParser.format(StringEscapeUtils.escapeXml10(sense.getGloss().toString().replaceAll("[\n\r]", "; "))));
                     lexicon.write("</span>");
 
                     if (sense.getExamples() != null) {
@@ -78,8 +81,7 @@ public final class WiktionaryUtil {
 
                 lexicon.write("</ol>\n");
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage(), e);
             return;
         }
